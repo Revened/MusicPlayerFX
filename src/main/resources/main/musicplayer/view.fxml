@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.media.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="1008.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.musicplayer.controller.Controller">
+   <children>
+      <TabPane layoutY="25.0" prefHeight="369.0" prefWidth="1008.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-4.0">
+        <tabs>
+          <Tab text="Player">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Slider fx:id="volumeSlider" layoutX="243.0" layoutY="167.0" onMouseDragged="#volumeSliderAction" orientation="VERTICAL" />
+                        <ToggleButton fx:id="tb" layoutX="97.0" layoutY="237.0" mnemonicParsing="false" onAction="#playButton" prefHeight="53.0" prefWidth="65.0" />
+                        <Slider fx:id="durationSlider" layoutX="15.0" layoutY="290.0" onMouseDragged="#durationSliderActionWhileMove" onMouseReleased="#durationSliderAction" prefHeight="36.0" prefWidth="228.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="MusicRename">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="11.0" layoutY="12.0" mnemonicParsing="false" onAction="#ChooseFolderOnButtonClick" text="Choose Path" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                         <Button layoutX="93.0" layoutY="10.0" mnemonicParsing="false" onAction="#ChooseEndFolderOnButtonClick" text="Choose path for renamed" />
+                        <Label fx:id="musicRenameStartLabel" layoutX="14.0" layoutY="45.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="45.0" />
+                        <Label fx:id="musicRenameEndLabel" layoutX="79.0" layoutY="75.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="75.0" />
+                        <Button fx:id="musicRenameStartButton" disable="true" layoutX="252.0" layoutY="10.0" mnemonicParsing="false" onAction="#startRename" text="Start" />
+                        <Label layoutX="14.0" layoutY="71.0" text="end path" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="75.0" />
+                        <Label layoutX="65.0" layoutY="45.0" text="chosen path" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="45.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Settings"></Tab>
+        </tabs>
+      </TabPane>
+      <MenuBar layoutX="798.0" layoutY="14.0" prefHeight="25.0" prefWidth="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Settings">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <MediaView fitHeight="200.0" fitWidth="200.0" layoutX="14.0" layoutY="35.0" />
+   </children>
+</AnchorPane>
