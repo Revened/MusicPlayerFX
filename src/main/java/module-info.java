@@ -2,10 +2,11 @@ module main.musicplayer {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.xml;
-    requires tika.core;
-    requires tika.parsers;
+    /*requires tika.core;
+    requires tika.parsers;*/
     requires java.desktop;
     requires javafx.media;
+    requires mp3agic;
 
 
     opens main.musicplayer to javafx.fxml;

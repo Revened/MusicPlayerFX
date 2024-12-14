@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.media.*?>
 
@@ -32,7 +33,22 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab text="Settings"></Tab>
+            <Tab text="Settings">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+
+                        </children></AnchorPane>
+                </content>
+            </Tab>
+            <Tab text="Equaliser">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                        <children>
+
+                        </children></AnchorPane>
+                </content>
+            </Tab>
         </tabs>
       </TabPane>
       <MenuBar layoutX="798.0" layoutY="14.0" prefHeight="25.0" prefWidth="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -54,6 +70,8 @@
           </Menu>
         </menus>
       </MenuBar>
-      <MediaView fitHeight="200.0" fitWidth="200.0" layoutX="14.0" layoutY="35.0" />
+      <MediaView fitHeight="200.0" fitWidth="200.0" layoutX="66.0" layoutY="365.0" />
+      <Button layoutX="14.0" layoutY="405.0" mnemonicParsing="false" onAction="#testButton" text="Button" />
+      <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="236.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

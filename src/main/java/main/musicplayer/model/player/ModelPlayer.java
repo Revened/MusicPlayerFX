@@ -1,30 +1,29 @@
 package main.musicplayer.model.player;
 
+
+import com.mpatric.mp3agic.Mp3File;
 import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import main.musicplayer.model.Model;
+import main.musicplayer.model.ModelApp;
 
-import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.Properties;
 
-public class ModelPlayer implements Model {
+public class ModelPlayer extends ModelApp implements Model {
     private MediaPlayer mediaPlayer;
-    private Properties properties;
     private boolean isMouseClicked = false;
+    File failik = new File("C:\\Users\\pvare\\Desktop\\Music\\NotAddedToYaMusic\\Full Moon Full Life.mp3");
 
     public void setMouseClicked(boolean mouseClicked) {
         isMouseClicked = mouseClicked;
     }
-    @Override
-    public void setProperties(Properties prop) {
-        properties = prop;
-    }
     public void init(Slider durationSlider) {
-        mediaPlayer = new MediaPlayer(new Media(new File("C:\\Users\\pvare\\Desktop\\Music\\NotAddedToYaMusic\\Full Moon Full Life.mp3").toURI().toString()));
+        mediaPlayer = new MediaPlayer(new Media(new File(String.valueOf(failik)).toURI().toString()));
+
         mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> { //передвижение слайдера во время проигрывания песни
             if (!isMouseClicked) {
                 double songDuration = mediaPlayer.getTotalDuration().toSeconds();
@@ -45,6 +44,7 @@ public class ModelPlayer implements Model {
             mediaPlayer.pause();
             toggleButton.setText("Play");
         }
+
     }
     public void setVolume(Slider volume) {
         double value = volume.getValue() / 100 / 1.5;
@@ -57,4 +57,15 @@ public class ModelPlayer implements Model {
         /*double value = durationSlider.getValue() * songDuration / 100 ;
         System.out.println("Value set to " + value);*/
     }
+    public void showImage(ImageView imageView) {
+        File file2 = new File("C:\\Users\\pvare\\Desktop\\test.jpg");
+        try {
+            imageView.setImage(getImage(new Mp3File(new File(String.valueOf(failik))).getId3v2Tag()));
+        } catch (Exception e) {
+
+        }
+        //Image image = new Image();
+        //imageView.setImage(image);
+    }
+
 }
