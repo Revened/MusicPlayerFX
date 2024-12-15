@@ -3,6 +3,7 @@ package main.musicplayer.model.musicRename;
 import com.mpatric.mp3agic.Mp3File;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import main.musicplayer.model.Model;
@@ -20,7 +21,6 @@ public class ModelMusicRename extends ModelApp implements Model, FileVisitor {
 
     private List<String> formatNames = new ArrayList<>();
     private List<Path> oldPath = new ArrayList<>();
-
 
 
     public void init(Label musicRenameStartLabel, Button musicRenameStartButton, Label musicRenameEndLabel) {
@@ -83,12 +83,6 @@ public class ModelMusicRename extends ModelApp implements Model, FileVisitor {
         } catch (Exception e) {
             //e.printStackTrace();
         }
-
-        /*try {
-            folder = directoryChooser.showDialog(new Stage()).toPath();
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }*/
     }
 
     public void renameFiles() {
@@ -108,7 +102,7 @@ public class ModelMusicRename extends ModelApp implements Model, FileVisitor {
                 Path path = Path.of(oldPath.get(i).getParent() + "\\" + formatNames.get(i));
                 if (triggerWriter) {
                     if (oldPath.get(i).toFile().renameTo(new File(endFolder.toFile() + "\\" + formatNames.get(i)))) {
-                                                                        //место под вывод информиции о создании файла
+                        //место под вывод информиции о создании файла
                     } else {
 
                     }
@@ -137,15 +131,20 @@ public class ModelMusicRename extends ModelApp implements Model, FileVisitor {
             Path path = Path.of(file.toString());
             if (file.toString().endsWith("mp3")) {
                 try /*(InputStream input = new FileInputStream(path.toFile()))*/ {
-                    Mp3File song = new Mp3File(String.valueOf(file));
-                    HashMap hash;
-                    if (song.hasId3v1Tag()){                                                   //mp3agic
+                    Mp3File song = new Mp3File(String.valueOf(file));                         //mp3agic
+                    HashMap hash = getSongInfo(song);
+
+                    if (hash != null && hash.get("image") != null) {
+                        uploadInfo(path, StringFormatter.formatArtistTitle(hash.get("artist").toString(), hash.get("songName").toString()), getImage(song));
+                    }
+
+                    /*if (song.hasId3v1Tag()){
                         hash = id3v1Tag(song.getId3v1Tag());
                         uploadInfo(path, StringFormatter.formatArtistTitle(hash.get("artist").toString(), hash.get("songName").toString()));
                     } else if (song.hasId3v2Tag()) {
                         hash = id3v2Tag(song.getId3v2Tag());
                         uploadInfo(path, StringFormatter.formatArtistTitle(hash.get("artist").toString(), hash.get("songName").toString()), (byte[]) hash.get("image"));
-                    }
+                    }*/
                     /*ContentHandler handler = new DefaultHandler();                        //apache.tika v1.4
                     Metadata metadata = new Metadata();
                     Parser parser = new Mp3Parser();
@@ -171,13 +170,12 @@ public class ModelMusicRename extends ModelApp implements Model, FileVisitor {
     }
 
 
-
     private void uploadInfo(Path oldPath, String list) {
         this.oldPath.add(oldPath);
         formatNames.add(list);
     }
 
-    private void uploadInfo(Path oldPath, String list, byte[] image) {
+    private void uploadInfo(Path oldPath, String list, Image image) {
         this.oldPath.add(oldPath);
         formatNames.add(list);
         //не реализованно

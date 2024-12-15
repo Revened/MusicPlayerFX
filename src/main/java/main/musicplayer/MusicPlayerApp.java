@@ -1,14 +1,9 @@
 package main.musicplayer;
 
 import javafx.application.Application;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import main.musicplayer.controller.Controller;
 
 import java.io.IOException;
 

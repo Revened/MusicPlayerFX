@@ -3,19 +3,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.media.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="1008.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.musicplayer.controller.Controller">
    <children>
-      <TabPane layoutY="25.0" prefHeight="369.0" prefWidth="1008.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-4.0">
+      <TabPane layoutY="25.0" prefHeight="500.0" prefWidth="1008.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-4.0">
         <tabs>
           <Tab text="Player">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="1008.0">
                      <children>
-                        <Slider fx:id="volumeSlider" layoutX="243.0" layoutY="167.0" onMouseDragged="#volumeSliderAction" orientation="VERTICAL" />
-                        <ToggleButton fx:id="tb" layoutX="97.0" layoutY="237.0" mnemonicParsing="false" onAction="#playButton" prefHeight="53.0" prefWidth="65.0" />
-                        <Slider fx:id="durationSlider" layoutX="15.0" layoutY="290.0" onMouseDragged="#durationSliderActionWhileMove" onMouseReleased="#durationSliderAction" prefHeight="36.0" prefWidth="228.0" />
+                        <Slider fx:id="volumeSlider" layoutX="272.0" layoutY="212.0" onMouseDragged="#volumeSliderAction" orientation="VERTICAL" />
+                        <ToggleButton fx:id="tb" layoutX="97.0" layoutY="282.0" mnemonicParsing="false" onAction="#playButton" prefHeight="53.0" prefWidth="65.0" />
+                        <Slider fx:id="durationSlider" layoutX="15.0" layoutY="335.0" onMouseDragged="#durationSliderActionWhileMove" onMouseReleased="#durationSliderAction" prefHeight="36.0" prefWidth="228.0" />
+                        <Label fx:id="durationLabel" layoutX="21.0" layoutY="363.0" prefHeight="17.0" prefWidth="216.0" />
+                         <Label fx:id="songName" layoutX="21.0" layoutY="223.0" prefHeight="53.0" prefWidth="260.0" text="" wrapText="true" AnchorPane.leftAnchor="10.0" />
+                        <ImageView fx:id="imageView" fitHeight="200.0" fitWidth="200.0" layoutX="15.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                        <TextArea fx:id="songNames" editable="false" layoutX="304.0" layoutY="10.0" prefHeight="339.0" prefWidth="599.0" text="" wrapText="true" />
+                        <Button layoutX="69.0" layoutY="309.0" mnemonicParsing="false" text="|&lt;" onAction="#previousSongButton"/>
+                        <Button layoutX="162.0" layoutY="309.0" mnemonicParsing="false" text="&gt;|" onAction="#nextSongButton" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -70,8 +75,5 @@
           </Menu>
         </menus>
       </MenuBar>
-      <MediaView fitHeight="200.0" fitWidth="200.0" layoutX="66.0" layoutY="365.0" />
-      <Button layoutX="14.0" layoutY="405.0" mnemonicParsing="false" onAction="#testButton" text="Button" />
-      <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" layoutX="236.0" layoutY="365.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
