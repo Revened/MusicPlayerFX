@@ -3,6 +3,8 @@ package main.musicplayer.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import main.musicplayer.model.musicRename.ModelMusicRename;
 import main.musicplayer.model.player.ModelPlayer;
 import main.musicplayer.model.player.Playlist;
@@ -26,21 +28,8 @@ public class Controller {
     private Label durationLabel;
     @FXML
     private ImageView imageView;
-
-    /*static {
-        try {
-            Properties properties = new Properties();                          //Загрузка конфига и передача остальный классам
-            properties.load(new FileReader(propertiesFolder));
-            playlist.setProperties(properties);
-
-            modelPlayer.setProperties(properties);
-            modelMusicRename.setProperties(properties);
-            modelSettings.setProperties(properties);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
+    @FXML private VBox playlistVBox;
+    @FXML private AnchorPane scrollsAnchorPane;
 
     @FXML
     private void playButton() {
@@ -98,7 +87,7 @@ public class Controller {
         }
         playlist.init(songNames);
         modelMusicRename.init(musicRenameStartLabel, musicRenameStartButton, musicRenameEndLabel);
-        modelPlayer.init(durationSlider, volumeSlider, imageView, songName, durationLabel);
+        modelPlayer.init(durationSlider, volumeSlider, imageView, songName, durationLabel, playlistVBox, scrollsAnchorPane);
         modelSettings.init(settingsMRStartCheckBox, settingsMRStartButton, settingsMREndCheckBox, settingsMREndButton, settingsPlaylistLabel, settingsMREndFolderLabel, settingsMRStartFolderLabel);
     }
 
@@ -167,11 +156,11 @@ public class Controller {
     }
     @FXML
     private void createPlaylist() {
-        playlist.createPlaylist();
+        modelPlayer.createPlaylist();
     }
     @FXML
     private void shufflePlaylist() {
-        playlist.shufflePlaylist();
+        modelPlayer.shufflePlaylist();
     }
     @FXML
     private void updateProgram() {

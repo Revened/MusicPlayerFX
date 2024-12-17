@@ -1,6 +1,7 @@
 package main.musicplayer.model.player;
 
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
 import main.musicplayer.model.ModelApp;
 
 import java.io.File;
@@ -44,7 +45,17 @@ public class Playlist extends ModelApp implements FileVisitor {
         }
         return null;
     }
-
+    public File getSong(int index) {
+        if (playlist.size() >= index) {
+            return playlist.get(index - 1);
+        }
+        return null;
+    }
+    public File getLastSong() {
+        if (!previousSong.isEmpty()) {
+            return previousSong.get(previousSong.size() - 2);
+        } return null;
+    }
     public File nextSong() {
         try {
             previousSong.add(playlist.getFirst());
@@ -54,6 +65,15 @@ public class Playlist extends ModelApp implements FileVisitor {
             //e.printStackTrace();
             return null;
         }
+    }
+    public File setFirstSong(String index) {
+        int i = Integer.parseInt(index) - 1;
+        File file = playlist.get(i);
+        previousSong.add(playlist.getFirst());
+        playlist.remove(i);
+        playlist.removeFirst();
+        playlist.addFirst(file);
+        return file;
     }
 
     public void createPlaylist() {
@@ -99,6 +119,19 @@ public class Playlist extends ModelApp implements FileVisitor {
 
     public void removeSong(File song) {
         playlist.remove(song);
+    }
+    public void removeDown(String id) {
+        int i = Integer.parseInt(id);
+        File song = playlist.get(i - 1);
+        playlist.remove(song);
+        playlist.add(i, song);
+    }
+    public void removeUp(String id) {
+
+        int i = Integer.parseInt(id);
+        File song = playlist.get(i - 1);
+        playlist.remove(song);
+        playlist.add(i - 2, song);
     }
 
     @Override
