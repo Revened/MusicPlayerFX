@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import main.musicplayer.model.musicRename.ModelMusicRename;
 import main.musicplayer.model.player.ModelPlayer;
 import main.musicplayer.model.player.Playlist;
+import main.musicplayer.model.settings.ModelSettings;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,6 +16,7 @@ public class Controller {
     private static final Playlist playlist = new Playlist();
     private static final ModelPlayer modelPlayer = new ModelPlayer(playlist);
     private static final ModelMusicRename modelMusicRename = new ModelMusicRename();
+    private static final ModelSettings modelSettings = new ModelSettings();
     private static final String propertiesFolder = "src\\main\\resources\\main\\musicplayer\\settings.properties";
     @FXML
     private TextArea songNames;
@@ -25,7 +27,7 @@ public class Controller {
     @FXML
     private ImageView imageView;
 
-    static {
+    /*static {
         try {
             Properties properties = new Properties();                          //Загрузка конфига и передача остальный классам
             properties.load(new FileReader(propertiesFolder));
@@ -33,11 +35,12 @@ public class Controller {
 
             modelPlayer.setProperties(properties);
             modelMusicRename.setProperties(properties);
+            modelSettings.setProperties(properties);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
     @FXML
     private void playButton() {
@@ -81,9 +84,22 @@ public class Controller {
 
     @FXML
     private void initialize() {
+        try {
+            Properties properties = new Properties();                          //Загрузка конфига и передача остальный классам
+            properties.load(new FileReader(propertiesFolder));
+            playlist.setProperties(properties);
+
+            modelPlayer.setProperties(properties);
+            modelMusicRename.setProperties(properties);
+            modelSettings.setProperties(properties);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         playlist.init(songNames);
         modelMusicRename.init(musicRenameStartLabel, musicRenameStartButton, musicRenameEndLabel);
         modelPlayer.init(durationSlider, volumeSlider, imageView, songName, durationLabel);
+        modelSettings.init(settingsMRStartCheckBox, settingsMRStartButton, settingsMREndCheckBox, settingsMREndButton, settingsPlaylistLabel, settingsMREndFolderLabel, settingsMRStartFolderLabel);
     }
 
     @FXML
@@ -111,5 +127,55 @@ public class Controller {
     @FXML
     private void previousSongButton() {
         modelPlayer.previousSong();
+    }
+    @FXML
+    private CheckBox settingsMRStartCheckBox;
+    @FXML
+    private CheckBox settingsMREndCheckBox;
+    @FXML
+    private Label settingsPlaylistLabel;
+    @FXML
+    private Label settingsMRStartFolderLabel;
+    @FXML
+    private Label settingsMREndFolderLabel;
+    @FXML private Button settingsMRStartButton;
+    @FXML private Button settingsMREndButton;
+    @FXML
+    private void settingsMRStartCheckBox(){
+        modelSettings.checkBox(settingsMRStartCheckBox, settingsMRStartButton);
+    }
+    @FXML
+    private void settingsMREndCheckBox(){
+        modelSettings.checkBox(settingsMREndCheckBox, settingsMREndButton);
+    }
+    @FXML
+    private void settingsPlaylistPathButton() {
+        modelSettings.PathToPlaylist(settingsPlaylistLabel);
+    }
+    @FXML
+    private void settingsMRStartFolderButton() {
+        modelSettings.folderForRead(settingsMRStartFolderLabel);
+    }
+    @FXML
+    private void settingsMREndFolderButton() {
+        modelSettings.folderForWrite(settingsMREndFolderLabel);
+    }
+    @FXML
+    private void saveSettings() {
+        modelSettings.saveSettings();
+        updateProgram();
+    }
+    @FXML
+    private void createPlaylist() {
+        playlist.createPlaylist();
+    }
+    @FXML
+    private void shufflePlaylist() {
+        playlist.shufflePlaylist();
+    }
+    @FXML
+    private void updateProgram() {
+        modelPlayer.stop();
+        initialize();
     }
 }

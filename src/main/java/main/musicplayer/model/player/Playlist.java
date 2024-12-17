@@ -7,14 +7,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Playlist extends ModelApp implements FileVisitor {
     private List<File> playlist = new ArrayList<File>();
     private List<File> previousSong = new ArrayList<File>();
+    private File thisSong;
     private TextArea textArea;
 
     public void init(TextArea textArea) {
@@ -41,7 +39,10 @@ public class Playlist extends ModelApp implements FileVisitor {
     }
 
     public File getFirstSong() {
-        return playlist.getFirst();
+        if (!playlist.isEmpty()) {
+            return playlist.getFirst();
+        }
+        return null;
     }
 
     public File nextSong() {
@@ -58,12 +59,22 @@ public class Playlist extends ModelApp implements FileVisitor {
     public void createPlaylist() {
         Path path = Path.of(properties.get("songsPathToPlayer").toString());
         Set<FileVisitOption> options = new HashSet<>();
+        playlist = new ArrayList<>();
         try {
             Files.walkFileTree(path, options, 1, this);
             //visitFile(path, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        thisSong = playlist.getFirst();
+        updatePlaylist();
+    }
+    public void shufflePlaylist() {
+        thisSong = playlist.getFirst();
+        Collections.shuffle(playlist);
+        playlist.remove(thisSong);
+        playlist.addFirst(thisSong);
+        updatePlaylist();
     }
 
     public void deletePlaylist() {
@@ -71,16 +82,14 @@ public class Playlist extends ModelApp implements FileVisitor {
     }
 
     public void updatePlaylist() {
-        textArea.clear();
-        for (File file : playlist) {
-            textArea.appendText(file.getName() + "\n");
-        }
+        showPlaylist();
     }
 
     public void showPlaylist() {
         textArea.clear();
+        int i = 1;
         for (File file : playlist) {
-            textArea.appendText(file.getName() + "\n");
+            textArea.appendText(i++ + ": " + file.getName() + "\n");
         }
     }
 

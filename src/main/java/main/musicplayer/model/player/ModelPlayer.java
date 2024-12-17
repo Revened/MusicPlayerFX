@@ -18,14 +18,14 @@ import java.util.*;
 public class ModelPlayer extends ModelApp implements Model {
     private MediaPlayer mediaPlayer;
     private boolean isMouseClicked = false;
-    private double songDuration = 1.0;
+    private double songDuration = 3.1415926535;
     private final Playlist playlist;
     private Slider durationSlider;
     private Slider volumeSlider;
     private ImageView imageView;
     private Label songName;
     private Label durationLabel;
-    File failik = new File("C:\\Users\\pvare\\Desktop\\Music\\NotAddedToYaMusic\\Full Moon Full Life.mp3");
+    //File failik = new File("C:\\Users\\pvare\\Desktop\\Music\\NotAddedToYaMusic\\Full Moon Full Life.mp3");
 
     public ModelPlayer(Playlist playlist) {
         this.playlist = playlist;
@@ -43,19 +43,24 @@ public class ModelPlayer extends ModelApp implements Model {
         this.durationLabel = durationLabel;
 
         File file = playlist.getFirstSong();
-        Media media = new Media(failik.toURI().toString());
+        if (file != null) {
+            Media media = new Media(file.toURI().toString());
 
-        Mp3File mp3File = null;
-        try {
-            mp3File = new Mp3File(file);
-        } catch (Exception e) {
-            e.printStackTrace();
+            Mp3File mp3File = null;
+            try {
+                mp3File = new Mp3File(file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            player(media, mp3File);
+
+            playlist.showPlaylist();
         }
-        player(media, mp3File);
 
-        playlist.showPlaylist();
     }
-
+    public void stop() {
+        mediaPlayer.stop();
+    }
     private void player(Media media, Mp3File mp3File) {
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> { //передвижение слайдера во время проигрывания песни
@@ -76,10 +81,8 @@ public class ModelPlayer extends ModelApp implements Model {
         try {
             HashMap hashMap = getSongInfo(song);
             songName.setText(hashMap.get("songName").toString() + "\n" + hashMap.get("artist").toString());
-            //songDuration = mediaPlayer.getTotalDuration().toSeconds();
             imageView.setImage(getImage(song));
             setVolume();
-            //durationSlider(durationSlider);
         } catch (Exception e) {
 
         }
@@ -98,19 +101,19 @@ public class ModelPlayer extends ModelApp implements Model {
     public void toggleButton(ToggleButton toggleButton) {
         if (toggleButton.isSelected()) {
             mediaPlayer.play();
-            toggleButton.setText("Stop");
+            toggleButton.setText("||");
         } else {
             mediaPlayer.pause();
-            toggleButton.setText("Play");
+            toggleButton.setText("➤");
         }
     }
 
     public void setVolume() {
         double value = volumeSlider.getValue() / 100 / 1.5;
         mediaPlayer.setVolume(value);
-        System.out.println("Volume set to " + value);
+        //System.out.println("Volume set to " + value);
     }
-
+    @Deprecated
     public void durationSlider() {
         double songDuration = mediaPlayer.getTotalDuration().toSeconds();
         mediaPlayer.seek(Duration.seconds(durationSlider.getValue() * songDuration / 100));
@@ -141,5 +144,4 @@ public class ModelPlayer extends ModelApp implements Model {
             playlist.updatePlaylist();
         }
     }
-
 }
