@@ -229,7 +229,7 @@ public class ModelPlayer extends ModelApp implements Model {
         down.setAlignment(Pos.CENTER_LEFT);
         down.setId(String.valueOf(i));
 
-        if (i <= 1) {
+        if (i <= 1 || i == playlist.getPlaylist().size()) {
             down.setVisible(false); // Костыль
         }
 
@@ -278,5 +278,6 @@ public class ModelPlayer extends ModelApp implements Model {
     public void createPlaylist() {
         playlist.createPlaylist();
         updateSongPanel();
+        changeSong(playlist.getFirstSong());
     }
 }
