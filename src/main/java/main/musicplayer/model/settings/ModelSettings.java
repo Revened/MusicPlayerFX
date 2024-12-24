@@ -7,7 +7,6 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import main.musicplayer.model.ModelApp;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -70,8 +69,8 @@ public class ModelSettings extends ModelApp {
         }
     }
     public void saveSettings() {
-        String propertiesFolder = "src\\main\\resources\\main\\musicplayer\\settings.properties";
         properties = tempProp;
+
         try {
             properties.store(new FileOutputStream(propertiesFolder),"qqq");
         } catch (IOException e) {

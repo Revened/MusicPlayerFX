@@ -5,13 +5,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import main.musicplayer.MusicPlayerApp;
 import main.musicplayer.model.musicRename.ModelMusicRename;
 import main.musicplayer.model.player.ModelPlayer;
 import main.musicplayer.model.player.Playlist;
 import main.musicplayer.model.settings.ModelSettings;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 public class Controller {
@@ -19,7 +19,8 @@ public class Controller {
     private static final ModelPlayer modelPlayer = new ModelPlayer(playlist);
     private static final ModelMusicRename modelMusicRename = new ModelMusicRename();
     private static final ModelSettings modelSettings = new ModelSettings();
-    private static final String propertiesFolder = "src\\main\\resources\\main\\musicplayer\\settings.properties";
+    private String propertyFolder;
+
     @FXML
     private TextArea songNames;
     @FXML
@@ -73,24 +74,37 @@ public class Controller {
 
     @FXML
     private void initialize() {
+        Properties properties = new Properties();
         try {
-            Properties properties = new Properties();                          //Загрузка конфига и передача остальный классам
-            properties.load(new FileReader(propertiesFolder));
+            smallParser();
+            properties.load(new FileReader(propertyFolder));    //Загрузка конфига и передача остальный классам
             playlist.setProperties(properties);
-
             modelPlayer.setProperties(properties);
             modelMusicRename.setProperties(properties);
-            modelSettings.setProperties(properties);
+            modelSettings.setProperties(properties); modelSettings.setPropertiesFolder(propertyFolder);
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            System.out.println(e);
         }
         playlist.init(songNames);
         modelMusicRename.init(musicRenameStartLabel, musicRenameStartButton, musicRenameEndLabel);
         modelPlayer.init(durationSlider, volumeSlider, imageView, songName, durationLabel, playlistVBox, scrollsAnchorPane);
         modelSettings.init(settingsMRStartCheckBox, settingsMRStartButton, settingsMREndCheckBox, settingsMREndButton, settingsPlaylistLabel, settingsMREndFolderLabel, settingsMRStartFolderLabel);
     }
+    private void smallParser() {
+        propertyFolder = String.valueOf(MusicPlayerApp.class.getResource("settings.properties").getPath());       //через jar/exe
+        StringBuilder sb = new StringBuilder();
+        String[] str = propertyFolder.split("/");
+        for (int i = 1; !str[i].contains("MusicPlayer"); i++) {
+            if (!str[i].contains("file")) {
+                sb.append(str[i]).append("\\");
+            }
+        }
+        sb.append("settings.properties");
+        propertyFolder = sb.toString();
 
+        /*propertyFolder = "src/main/resources/main/musicplayer/settings.properties";*/
+    }
     @FXML
     private void ChooseFolderOnButtonClick() {
         modelMusicRename.chooseStartFolder();

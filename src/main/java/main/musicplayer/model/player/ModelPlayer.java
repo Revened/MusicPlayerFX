@@ -51,6 +51,7 @@ public class ModelPlayer extends ModelApp implements Model {
         this.durationLabel = durationLabel;
 
         File file = playlist.getFirstSong();
+
         if (file != null) {
             Media media = new Media(file.toURI().toString());
 

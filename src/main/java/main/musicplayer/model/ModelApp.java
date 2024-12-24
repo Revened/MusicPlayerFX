@@ -12,9 +12,13 @@ import java.util.*;
 
 public abstract class ModelApp implements Model{
     public Properties properties;
+    public String propertiesFolder;
 
     public void setProperties(Properties prop) {
         properties = prop;
+    }
+    public void setPropertiesFolder(String propertiesFolder) {
+        this.propertiesFolder = propertiesFolder;
     }
     public HashMap<String, Object> getSongInfo(Mp3File song) {
         HashMap hash = new HashMap();

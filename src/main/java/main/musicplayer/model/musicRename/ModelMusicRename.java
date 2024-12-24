@@ -134,7 +134,7 @@ public class ModelMusicRename extends ModelApp implements Model, FileVisitor {
                     Mp3File song = new Mp3File(String.valueOf(file));                         //mp3agic
                     HashMap hash = getSongInfo(song);
 
-                    if (hash != null && hash.get("image") != null) {
+                    if (hash != null ) {
                         uploadInfo(path, StringFormatter.formatArtistTitle(hash.get("artist").toString(), hash.get("songName").toString()), getImage(song));
                     }
 

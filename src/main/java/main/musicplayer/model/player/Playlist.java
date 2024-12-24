@@ -86,7 +86,11 @@ public class Playlist extends ModelApp implements FileVisitor {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        thisSong = playlist.getFirst();
+        if (playlist.isEmpty()) {
+            thisSong = null;
+        } else {
+            thisSong = playlist.getFirst();
+        }
         updatePlaylist();
     }
     public void shufflePlaylist() {
